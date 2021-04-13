@@ -14,6 +14,11 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class CustomerEntity extends BaseEntity {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "fullname")
 	private String fullName;
 	

@@ -3,7 +3,6 @@ package com.laptrinhjavaweb.api.admin;
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
-import com.laptrinhjavaweb.dto.request.AssignCustomerRequestDto;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.service.IUserService;
 import org.apache.log4j.Logger;
@@ -11,32 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
-
-@RestController(value="userAPIOfAdmin")
-//@RequestMapping("/api/user")
+@RestController
+@RequestMapping("/api/user")
 public class UserAPI {
 
-    //private Logger LOGGER = Logger.getLogger(UserAPI.class);
+    private Logger LOGGER = Logger.getLogger(UserAPI.class);
 
     @Autowired
     private IUserService userService;
 
-    @PostMapping("/api-customer-assignment")
-    public void saveCustomer(@RequestBody AssignCustomerRequestDto request) {
-        if (Objects.nonNull(request)) {
-            userService.assginCustomer(request);
-        }
-    }
-
-    @PostMapping("/api/customer-staffmodal")
-    public List<UserDTO> loadStaff(@RequestBody Long customerId) {
-        List<UserDTO> result = userService.findAllByCustomer(customerId);
-        return result;
-    }
-
-    /*@PostMapping
+    @PostMapping
     public ResponseEntity<UserDTO> createUsers(@RequestBody UserDTO newUser) {
         return ResponseEntity.ok(userService.insert(newUser));
     }
@@ -73,5 +56,5 @@ public class UserAPI {
             userService.delete(idList);
         }
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }

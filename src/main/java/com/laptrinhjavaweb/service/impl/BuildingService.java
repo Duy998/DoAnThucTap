@@ -1,25 +1,27 @@
 package com.laptrinhjavaweb.service.impl;
 
-import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
-import com.laptrinhjavaweb.converter.BuildingConverter;
-import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.entity.RentAreaEntity;
-import com.laptrinhjavaweb.enums.BuildingTypesEnum;
-import com.laptrinhjavaweb.enums.DistrictsEnum;
-import com.laptrinhjavaweb.repository.BuildingRepository;
-import com.laptrinhjavaweb.repository.RentAreaRepository;
-import com.laptrinhjavaweb.service.IBuildingService;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.converter.BuildingConverter;
+import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
+import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.enums.BuildingTypesEnum;
+import com.laptrinhjavaweb.enums.DistrictsEnum;
+import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.service.IBuildingService;
 @Service
 public class BuildingService implements IBuildingService {
 
@@ -27,11 +29,12 @@ public class BuildingService implements IBuildingService {
     private BuildingRepository buildingRepository;
 
     @Autowired
-    private RentAreaRepository rentAreaRepository;
-
-    @Autowired
     private BuildingConverter buildingConverter;
 
+    @Autowired
+    private UserRepository userrepository;
+    
+    
     @Override
     public List<BuildingDTO> findAll() {
         List<BuildingEntity> entities = buildingRepository.findAll();
@@ -40,92 +43,30 @@ public class BuildingService implements IBuildingService {
     }
 
     @Override
-    public BuildingDTO findOne(Long id) {
-        BuildingEntity entity = buildingRepository.findOne(id);
-        return buildingConverter.convertToDtoUpdate(entity);
-    }
-
-    @Override
     @Transactional
-    public BuildingDTO save(BuildingDTO building) {
-
-        if (Objects.nonNull(building)) {
-            BuildingEntity buildingEntity = buildingConverter.convertToEntity(building);
-
-            if (building.getId() != null) {
-                rentAreaRepository.deleteByBuilding_Id(building.getId());
-            }
-            if (StringUtils.isNotBlank(building.getAreaRent())) {
-                List<String> lstArea = Arrays.asList(building.getAreaRent().split(","));
-
-                List<RentAreaEntity> rentAreas = lstArea.stream().map((String area) -> {
-
-                    RentAreaEntity rentAreaEntity = new RentAreaEntity();
-                    rentAreaEntity.setValue(Integer.parseInt(area));
-                    rentAreaEntity.setBuilding(buildingEntity);
-
-                    return rentAreaEntity;
-                }).collect(Collectors.toList());
-
-                buildingEntity.setAreas(rentAreas);
-            }
-
-            return buildingConverter.convertToDto(buildingRepository.save(buildingEntity));
-        }
-        return null;
+    public void save(BuildingDTO buildingDTO) {
+        BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+        buildingRepository.save(buildingEntity);
     }
 
     @Override
-    @Transactional
-    public void delete(List<Long> buildingIds) {
-        buildingRepository.findAll(buildingIds).forEach(item -> buildingRepository.delete(item));
-    }
+    public List<BuildingDTO> findAll(Map<String, String> params, String[] buildingTypes) {
+        BuildingSearchBuilder builder = new BuildingSearchBuilder.Builder()
+                .setName(params.get("name"))
+                .setNumberOfBasement(Integer.parseInt(params.get("numberOfBasement")))
+                .setDistrict(params.get("district"))
+                .setStreet(params.get("street"))
+                .setWard(params.get("ward"))
+                .setBuildingTypes(buildingTypes)
+                /*.setAreaRentFrom(Integer.parseInt(params.get("areaRentFrom")))
+                .setAreaRentTo(Integer.parseInt(params.get("areaRentTo")))
+                .setFloorArea(Integer.parseInt(params.get("floorArea")))
+                .setCostRentFrom(Integer.parseInt(params.get("costRentFrom")))
+                .setCostRentTo(Integer.parseInt(params.get("costRentTo")))
+                .setStaffId(Integer.parseInt(params.get("staffId")))*/
+                .build();
 
-    @Override
-    public List<BuildingDTO> findByCondition(Map<String, String> params, String[] buildingTypes) {
-        BuildingSearchBuilder.Builder paramsValidated = new BuildingSearchBuilder.Builder();
-
-        if (StringUtils.isNotBlank(params.get("name"))) {
-            paramsValidated.setName(params.get("name"));
-        }
-        if (StringUtils.isNotBlank(params.get("numberOfBasement"))) {
-            paramsValidated.setNumberOfBasement(Integer.parseInt(params.get("numberOfBasement")));
-        }
-        if (StringUtils.isNotBlank(params.get("district"))) {
-            paramsValidated.setDistrict(params.get("district"));
-        }
-        if (StringUtils.isNotBlank(params.get("street"))) {
-            paramsValidated.setStreet(params.get("street"));
-        }
-        if (StringUtils.isNotBlank(params.get("ward"))) {
-            paramsValidated.setWard(params.get("ward"));
-        }
-        if (StringUtils.isNotBlank(params.get("direction"))) {
-            paramsValidated.setDirection(params.get("direction"));
-        }
-        if (StringUtils.isNotBlank(params.get("floorArea"))) {
-            paramsValidated.setFloorArea(Integer.parseInt(params.get("floorArea")));
-        }
-        if (!ArrayUtils.isEmpty(buildingTypes)) {
-            paramsValidated.setBuildingTypes(buildingTypes);
-        }
-        if (StringUtils.isNotBlank(params.get("areaRentFrom"))) {
-            paramsValidated.setAreaRentFrom(Integer.parseInt(params.get("areaRentFrom")));
-        }
-        if (StringUtils.isNotBlank(params.get("areaRentTo"))) {
-            paramsValidated.setAreaRentTo(Integer.parseInt(params.get("areaRentTo")));
-        }
-        if (StringUtils.isNotBlank(params.get("costRentFrom"))) {
-            paramsValidated.setCostRentFrom(Integer.parseInt(params.get("costRentFrom")));
-        }
-        if (StringUtils.isNotBlank(params.get("costRentTo"))) {
-            paramsValidated.setCostRentTo(Integer.parseInt(params.get("costRentTo")));
-        }
-        if (StringUtils.isNotBlank(params.get("staffId"))) {
-            paramsValidated.setStaffId(Integer.parseInt(params.get("staffId")));
-        }
-
-        List<BuildingEntity> buildingEntities = buildingRepository.findByCondition(paramsValidated.build());
+        List<BuildingEntity> buildingEntities = buildingRepository.findAll(builder);
 
         List<BuildingDTO> results = buildingEntities.stream().map(item -> buildingConverter.convertToDto(item)).collect(Collectors.toList());
         return results;
@@ -144,4 +85,59 @@ public class BuildingService implements IBuildingService {
         Stream.of(DistrictsEnum.values()).forEach(district -> {result.put(district.name(), district.getDistrictValue());});
         return result;
     }
+	/* jdbc=============================== */
+    
+   /* ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
+	public Connection getConnection() {
+		try {
+			Class.forName(resourceBundle.getString("driverName"));
+			String url = resourceBundle.getString("url");
+			String user = resourceBundle.getString("username");
+			String password = resourceBundle.getString("password");
+			return DriverManager.getConnection(url, user, password);
+		} catch (ClassNotFoundException | SQLException e) {
+			return null;
+		}
+	}
+	*/
+
+	@Override
+	public BuildingDTO updatebystaffid(StaffResponseDTO staffs) {
+		BuildingEntity entity = buildingRepository.findOne(staffs.getBuildingId());	
+		List<UserEntity> listuserentity = new ArrayList<UserEntity>();
+		for (Long userEntity :  staffs.getStaffs()) {
+			UserEntity userentity = userrepository.findOne(userEntity);
+			listuserentity.add(userentity);
+		}
+		entity.setStaffs(listuserentity);
+
+		return buildingConverter.convertToDto(buildingRepository.save(entity)); 
+		
+		/*String sql = "SELECT * FROM assignmentbuilding WHERE buildingid = '"+staffs.getBuildingId()+"'";
+		List<AssignmentBuildingDTO> results = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		connection = getConnection();
+		statement = connection.prepareStatement(sql);
+		statement.setLong(1, );
+		setParameter(statement, parameters);
+		resultSet = statement.executeQuery();
+		
+		*/
+		
+		
+		
+		
+		/* return null; */
+	}
+	
+	
+
+	/*/jdbc============================ */
+	@Override
+	public BuildingDTO findOne(Long buildingid) {
+		return buildingConverter.convertToDto(buildingRepository.findOne(buildingid));
+	}
 }

@@ -4,8 +4,27 @@ public class StaffResponseDTO {
     private String fullName;
     private Long staffId;
     private String checked;
+    private Long[] staffs;
+    private Long buildingId;
+    
+    
+    public Long getBuildingId() {
+		return buildingId;
+	}
 
-    public String getFullName() {
+	public void setBuildingId(Long buildingId) {
+		this.buildingId = buildingId;
+	}
+
+	public Long[] getStaffs() {
+		return staffs;
+	}
+
+	public void setStaffs(Long[] staffs) {
+		this.staffs = staffs;
+	}
+
+	public String getFullName() {
         return fullName;
     }
 

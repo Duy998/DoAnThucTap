@@ -1,18 +1,20 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
-import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
-import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+
+import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
@@ -21,9 +23,10 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 	private EntityManager entityManager;
 
 	@Override
-	public List<BuildingEntity> findByCondition(BuildingSearchBuilder builder) {
+	public List<BuildingEntity> findAll(BuildingSearchBuilder builder) {
 		try {
 			StringBuilder sb = new StringBuilder("select * from building b where 1 = 1");
+			StringBuilder joinTable = new StringBuilder("");
 			sb = buildQueryCommon(builder, sb);
 			sb = buildQuerySpecial(builder, sb);
 			Query query = entityManager.createNativeQuery(sb.toString(), BuildingEntity.class);
@@ -44,7 +47,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 			}
 			sb.append(")");
 		}
-		if (builder.getCostRentFrom() != null || builder.getCostRentTo() != null) {
+		/*if (builder.getCostRentFrom() != null || builder.getCostRentTo() != null) {
 			if (builder.getCostRentFrom() != null) {
 				sb.append(" and " + builder.getCostRentFrom() + " <= b.value");
 			}
@@ -52,17 +55,12 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 				sb.append(" and b.value <= " + builder.getAreaRentTo() + "");
 			}
 			sb.append(")");
-		}
+		}*/
 		if (builder.getBuildingTypes() != null && builder.getBuildingTypes().length > 0) {
 			sb.append(" and (");
 			String queryType = Arrays.stream(builder.getBuildingTypes()).map(item -> "b.type like '%" + item + "%'").collect(Collectors.joining(" OR "));
 			sb.append(queryType);
 			sb.append(")");
-		}
-		if (builder.getStaffId() != null) {
-			sb.append(" and exists " +
-					"(select * from assignmentbuilding ab " +
-					"where ab.buildingid = b.id and ab.staffid = " + builder.getStaffId() + ")");
 		}
 		return sb;
 	}

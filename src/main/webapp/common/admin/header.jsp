@@ -33,17 +33,16 @@
                     </li>
 
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user"></i>
                             Quản lý Khách hàng
                             &nbsp;
                             <i class="fa fa-angle-down bigger-110"></i>
                         </a>
-
                         <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
                             <li>
                                 <a href='<c:url value='/admin/customer-list'/>'>
-                                    Danh sách Khách hàng
+                                    Danh sách Nhân Viên
                                 </a>
                             </li>
                         </ul>
@@ -54,6 +53,22 @@
                             <i class="fa fa-list-ul"></i>
                             MyList
                         </a>
+                    </li>
+                    
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>
+                            Quản lý Tài Khoản
+                            &nbsp;
+                            <i class="fa fa-angle-down bigger-110"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                            <li>
+                                <a href='<c:url value='/admin/user-list'/>'>
+                                    Danh sách Tài Khoản
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>

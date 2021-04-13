@@ -6,6 +6,11 @@ import javax.persistence.*;
 @Table(name = "rentarea")
 public class RentAreaEntity extends BaseEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "value")
 	private Integer value;
 	

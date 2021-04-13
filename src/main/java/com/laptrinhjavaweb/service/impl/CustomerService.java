@@ -1,49 +1,75 @@
 package com.laptrinhjavaweb.service.impl;
 
-import com.laptrinhjavaweb.converter.CustomerConverter;
-import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.request.AssignCustomerRequestDto;
-import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.entity.CustomerEntity;
-import com.laptrinhjavaweb.entity.RentAreaEntity;
-import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.BuildingRepository;
-import com.laptrinhjavaweb.repository.CustomerRepository;
-import com.laptrinhjavaweb.repository.UserRepository;
-import com.laptrinhjavaweb.service.ICustomerService;
-import org.apache.commons.lang.StringUtils;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import com.laptrinhjavaweb.converter.CustomerConverter;
+import com.laptrinhjavaweb.dto.CustomerDTO;
+import com.laptrinhjavaweb.entity.CustomerEntity;
+import com.laptrinhjavaweb.repository.CustomerRepository;
+import com.laptrinhjavaweb.service.ICustomerService;
+
 
 @Service
-public class CustomerService implements ICustomerService {
-    @Autowired
-    private CustomerRepository customerRepository;
+public class CustomerService implements ICustomerService{
 
-    @Autowired
-    private CustomerConverter customerConverter;
+	@Autowired
+	private CustomerRepository customerrepository;
+	
+	@Autowired
+	private CustomerConverter customerconverter;
+	
+	
+	@Override
+	public List<CustomerDTO> findAll() {
+		List<CustomerEntity> entitys = customerrepository.findAll();
+		List<CustomerDTO> result = entitys.stream().map(item -> customerconverter.convertToDto(item)).collect(Collectors.toList());
+		return result;
+	}
 
-    @Override
-    public List<CustomerDTO> findAll() {
-        List<CustomerEntity> customersFound = customerRepository.findAll();
-        return customersFound.stream().map(customerConverter::convertToDto).collect(Collectors.toList());
-    }
 
-    @Override
-    public CustomerDTO save(CustomerDTO customerDTO) {
-        if (Objects.nonNull(customerDTO)) {
-            CustomerEntity customerEntity = customerConverter.convertToEntity(customerDTO);
+	@Override
+	public CustomerDTO findOne(Long CustomerId) {	
+		return customerconverter.convertToDto(customerrepository.findOne(CustomerId));
+	}
 
-            if (Objects.isNull(customerDTO.getId())) {
-                customerEntity.setStatus(0);
-            }
-            return customerConverter.convertToDto(customerRepository.save(customerEntity));
-        }
-        return null;
-    }
+
+	@Override
+	public CustomerDTO InsertCustomer(CustomerDTO dto) {
+		CustomerEntity result = new CustomerEntity();
+		if(dto.getId() != null) {
+			CustomerEntity entity = customerrepository.findOne(dto.getId());
+			entity.setFullName(dto.getFullName());
+			entity.setPhone(dto.getPhone());
+			entity.setEmail(dto.getEmail());
+			entity.setStatus(dto.getStatus());
+			result = entity;
+		}else {
+			result = customerconverter.convertToEntity(dto);	
+		}
+		
+		return customerconverter.convertToDto(customerrepository.save(result));
+	}
+
+
+	@Override
+	public void deleteCustomer(Long[] ids) {
+		for (Long long1 : ids) {
+			customerrepository.delete(long1);
+		}
+		
+	}
+
+
+	@Override
+	public List<CustomerDTO> findAll(CustomerDTO customer) {
+		List<CustomerEntity> entitys = customerrepository.findAll(customer);
+		List<CustomerDTO> result = entitys.stream().map(item -> customerconverter.convertToDto(item)).collect(Collectors.toList());
+		return result;
+	}
+	
+
 }

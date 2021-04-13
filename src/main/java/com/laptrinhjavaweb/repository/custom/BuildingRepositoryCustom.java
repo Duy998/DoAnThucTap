@@ -1,10 +1,11 @@
 package com.laptrinhjavaweb.repository.custom;
 
+import java.util.List;
+
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 
-import java.util.List;
-
 public interface BuildingRepositoryCustom {
-	List<BuildingEntity> findByCondition(BuildingSearchBuilder builder);
+	List<BuildingEntity> findAll(BuildingSearchBuilder builder);
+	
 }

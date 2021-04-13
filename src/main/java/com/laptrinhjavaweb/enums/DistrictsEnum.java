@@ -1,9 +1,5 @@
 package com.laptrinhjavaweb.enums;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 public enum DistrictsEnum {
 	
 	D1("Quận 1"),
@@ -30,11 +26,4 @@ public enum DistrictsEnum {
 	public String getDistrictValue() {
 		return districtValue;
 	}
-
-    public static String getDistrictName(String code) {
-
-        Optional<DistrictsEnum> convertedCode = Arrays.stream(DistrictsEnum.values()).filter(e -> e.name().equals(code)).findFirst();
-
-        return convertedCode.isPresent() ? convertedCode.get().getDistrictValue() : null;
-    }
 }
