@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@include file="/common/taglib.jsp"%>
 <c:url var="buildingListURL" value="/admin/building-list"/>
+<c:url value="/api/building" var="formUrl" />
 <%--
   Created by IntelliJ IDEA.
   User: Asus
@@ -289,44 +290,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr role="row" class="odd">
-                            <td class="center">
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="ace">
-                                    <span class="lbl"></span>
-                                </label>
-                            </td>
-                            <td>ACM Tower</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>Test</td>
-                            <td>
-                                <div class="hidden-sm hidden-xs btn-group">
-                                    <button class="btn btn-sm btn-primary">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-primary">
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-primary" data-toggle="tooltip"
-                                            title="Giao tòa nhà">
-                                        <i class="fa fa-share-square-o" aria-hidden="true"
-                                           onclick="assignmentBuilding()"></i>
-                                    </button>
-
-                                    <button class="btn btn-sm btn-primary">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        
                         </tbody>
                     </table>
                 </div>

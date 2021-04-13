@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserDTO extends AbstractDTO {
+public class UserDTO extends AbstractDTO<UserDTO> {
 
-    private String userName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String userName;
     private String fullName;
     private String password;
     private Integer status;
@@ -15,9 +19,8 @@ public class UserDTO extends AbstractDTO {
     private String roleName;
     private String roleCode;
     private Map<String,String> roleDTOs = new HashMap<>();
-    private String checked;
-    private List<Long> buildingIds;
-    private List<Long> customerIds;
+    
+    Map<Long, String> users = new HashMap<>();
 
     public String getUserName() {
         return userName;
@@ -83,27 +86,13 @@ public class UserDTO extends AbstractDTO {
         this.roleDTOs = roleDTOs;
     }
 
-    public String getChecked() {
-        return checked;
-    }
+	public Map<Long, String> getUsers() {
+		return users;
+	}
 
-    public void setChecked(String checked) {
-        this.checked = checked;
-    }
-
-    public List<Long> getBuildingIds() {
-        return buildingIds;
-    }
-
-    public void setBuildingIds(List<Long> buildingIds) {
-        this.buildingIds = buildingIds;
-    }
-
-    public List<Long> getCustomerIds() {
-        return customerIds;
-    }
-
-    public void setCustomerIds(List<Long> customerIds) {
-        this.customerIds = customerIds;
-    }
+	public void setUsers(Map<Long, String> users) {
+		this.users = users;
+	}
+    
+    
 }

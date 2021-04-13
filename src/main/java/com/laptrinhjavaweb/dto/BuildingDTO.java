@@ -2,9 +2,11 @@ package com.laptrinhjavaweb.dto;
 
 public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	
+
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Integer numberOfBasement;
-	private Integer floorArea;
+	private Integer buildingArea;
 	private String street;
 	private String ward;
 	private String district;
@@ -31,11 +33,8 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	private String managerName;
 	private String managerPhone;
 	private String areaRent;
-	private String areaRentDescription;
-	private String brokerageFee;
 	private String address;
-	private String buildingTypesConverted;
-	private String staffsNameAndPhoneConverted;
+	private String type;
 	
 	public String getName() {
 		return name;
@@ -109,11 +108,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setNumberOfBasement(Integer numberOfBasement) {
 		this.numberOfBasement = numberOfBasement;
 	}
-	public Integer getFloorArea() {
-		return floorArea;
+	public Integer getBuildingArea() {
+		return buildingArea;
 	}
-	public void setFloorArea(Integer buildingArea) {
-		this.floorArea = buildingArea;
+	public void setBuildingArea(Integer buildingArea) {
+		this.buildingArea = buildingArea;
 	}
 	public String[] getBuildingTypes() {
 		return buildingTypes;
@@ -199,6 +198,18 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setAreaRent(String areaRent) {
 		this.areaRent = areaRent;
 	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public String getDirection() {
 		return direction;
@@ -214,45 +225,5 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 
 	public void setLevel(String level) {
 		this.level = level;
-	}
-
-	public String getBrokerageFee() {
-		return brokerageFee;
-	}
-
-	public void setBrokerageFee(String brokerageFee) {
-		this.brokerageFee = brokerageFee;
-	}
-
-	public String getAreaRentDescription() {
-		return areaRentDescription;
-	}
-
-	public void setAreaRentDescription(String areaRentDescription) {
-		this.areaRentDescription = areaRentDescription;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setBuildingTypesConverted(String buildingTypesConverted) {
-		this.buildingTypesConverted = buildingTypesConverted;
-	}
-
-	public String getBuildingTypesConverted() {
-		return buildingTypesConverted;
-	}
-
-	public String getStaffsNameAndPhoneConverted() {
-		return staffsNameAndPhoneConverted;
-	}
-
-	public void setStaffsNameAndPhoneConverted(String staffsNameAndPhoneConverted) {
-		this.staffsNameAndPhoneConverted = staffsNameAndPhoneConverted;
 	}
 }

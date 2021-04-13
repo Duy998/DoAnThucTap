@@ -1,44 +1,34 @@
 package com.laptrinhjavaweb.api.admin;
 
-import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.UserDTO;
-import com.laptrinhjavaweb.dto.request.AssignCustomerRequestDto;
-import com.laptrinhjavaweb.dto.request.BuildingIdSelectedRequestDto;
-import com.laptrinhjavaweb.service.ICustomerService;
-import com.laptrinhjavaweb.service.impl.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Objects;
+import com.laptrinhjavaweb.dto.CustomerDTO;
+import com.laptrinhjavaweb.service.ICustomerService;
 
-@RestController(value="customerAPIOfAdmin")
+@RestController(value = "customerAPIOfAdmin")
 public class CustomerAPI {
 
-    @Autowired
-    private ICustomerService customerService;
+	@Autowired
+	private ICustomerService icustomerservice;
 
-    @PostMapping("/api/customer")
-    public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        customerService.save(customerDTO);
-        return customerDTO;
-    }
-
-
-
-//    @DeleteMapping("/api/building")
-//    public void deleteBuilding(@RequestBody List<Long> customerIds) {
-//        if (!CollectionUtils.isEmpty(customerIds)) {
-//            customerService.delete(customerIds);
-//        }
-//    }
-
-//    @PutMapping("api/building")
-//    public void editBuilding(@RequestBody BuildingDTO building) {
-//        if (building.getId() != null) {
-//            buildingService.save(building);
-//        }
-//    }
+	@PostMapping("/api/customer")
+	public CustomerDTO createCustomer(@RequestBody CustomerDTO newCustomer) {
+		return icustomerservice.InsertCustomer(newCustomer);	
+	}
+	
+	@PutMapping("/api/customer")
+	public CustomerDTO updateCustomer(@RequestBody CustomerDTO newCustomer) {
+		return icustomerservice.InsertCustomer(newCustomer);	
+	}
+	
+	@DeleteMapping("/api/customer")
+	public void deleeteCustomer(@RequestBody Long[] ids) {
+		icustomerservice.deleteCustomer(ids);
+	}
+	
 }

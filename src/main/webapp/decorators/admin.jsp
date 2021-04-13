@@ -34,10 +34,6 @@
 		}
 
 	</style>
-
-    <style>
-
-    </style>
 </head>
 <body class="no-skin">
 	<!-- header -->
@@ -84,57 +80,24 @@
 	<script src="assets/js/jquery-ui.min.js"></script>
 
 	<script type="text/javascript">
-        // function showAlertBeforeDelete(callback) {
-        //     // swal({
-        //     //     title: "Xác nhận xóa",
-        //     //     text: "Bạn có chắc chắn xóa những dòng đã chọn",
-        //     //     type: "warning",
-        //     //     showCancelButton: true,
-        //     //     confirmButtonText: "Xác nhận",
-        //     //     cancelButtonText: "Hủy bỏ",
-        //     //     confirmButtonClass: "btn btn-success",
-        //     //     cancelButtonClass: "btn btn-danger"
-        //     // }).then(function (res) {
-        //     //     if(res.value){
-        //     //         callback();
-        //     //     }else if(res.dismiss == 'cancel'){
-        //     //         console.log('cancel');
-        //     //     }
-        //     // });
-        //     swal.fire
-        //     swal({
-        //         title: 'Do you want to save the changes?',
-        //         showDenyButton: true,
-        //         showCancelButton: true,
-        //         confirmButtonText: `Save`,
-        //         conf
-        //         denyButtonText: `Don't save`,
-        //     }).then((result) => {
-        //         /* Read more about isConfirmed, isDenied below */
-        //         if (result.isConfirmed) {
-        //             callback();
-        //             Swal.fire('Saved!', '', 'success')
-        //         } else if (result.isDenied) {
-        //             Swal.fire('Changes are not saved', '', 'info')
-        //         }
-        //     });
-        // }
-	</script>
-
-	<script type="text/javascript">
-		$(document).ready(() => {
-			console.log("Ready");
-
-			const message = localStorage.getItem("message");
-
-			if(message) {
-				// Retrieve
-				document.getElementById("infoArea").innerHTML = message;
-
-				localStorage.removeItem("message");
-			}
-
-		});
+        function showAlertBeforeDelete(callback) {
+            swal({
+                title: "Xác nhận xóa",
+                text: "Bạn có chắc chắn xóa những dòng đã chọn",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy bỏ",
+                confirmButtonClass: "btn btn-success",
+                cancelButtonClass: "btn btn-danger"
+            }).then(function (res) {
+                if(res.value){
+                    callback();
+                }else if(res.dismiss == 'cancel'){
+                    console.log('cancel');
+                }
+            });
+        }
 	</script>
 </body>
 </html>

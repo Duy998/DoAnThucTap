@@ -1,16 +1,12 @@
 package com.laptrinhjavaweb.builder;
 
-import java.io.Serializable;
-
-public class BuildingSearchBuilder implements Serializable {
+public class BuildingSearchBuilder {
 	
 	private String name;
 	private String district;
 	private Integer floorArea;
 	private String street;
 	private String ward;
-	private String level;
-	private String direction;
 	private Integer numberOfBasement;
 	private String[] buildingTypes = new String[] {};
 	private Integer costRentFrom;
@@ -18,9 +14,7 @@ public class BuildingSearchBuilder implements Serializable {
 	private Integer areaRentFrom;
 	private Integer areaRentTo;
 	private Integer staffId;
-	private String managerName;
-	private String managerPhone;
-
+	
 	public String getName() {
 		return name;
 	}
@@ -28,7 +22,7 @@ public class BuildingSearchBuilder implements Serializable {
 	public String getDistrict() {
 		return district;
 	}
-
+	
 	public Integer getFloorArea() {
 		return floorArea;
 	}
@@ -68,40 +62,20 @@ public class BuildingSearchBuilder implements Serializable {
 	public Integer getStaffId() {
 		return staffId;
 	}
-
-	public String getManagerName() {
-		return managerName;
-	}
-
-	public String getManagerPhone() {
-		return managerPhone;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public BuildingSearchBuilder(Builder builder) {
+	
+	private BuildingSearchBuilder(Builder builder) {
 		this.name = builder.name;
 		this.district = builder.district;
 		this.floorArea = builder.floorArea;
 		this.numberOfBasement = builder.numberOfBasement;
 		this.street = builder.street;
 		this.ward = builder.ward;
-		this.level = builder.level;
-		this.direction = builder.direction;
 		this.buildingTypes = builder.buildingTypes;
 		this.costRentFrom = builder.costRentFrom;
 		this.costRentTo = builder.costRentTo;
 		this.areaRentFrom = builder.areaRentFrom;
 		this.areaRentTo = builder.areaRentTo;
 		this.staffId = builder.staffId;
-		this.managerName = builder.managerName;
-		this.managerPhone = builder.managerPhone;
 	}
 	
 	public static class Builder {
@@ -111,8 +85,6 @@ public class BuildingSearchBuilder implements Serializable {
 		private String street;
 		private String ward;
 		private Integer floorArea;
-		private String level;
-		private String direction;
 		private Integer numberOfBasement;
 		private String[] buildingTypes = new String[] {};
 		private Integer costRentFrom;
@@ -120,8 +92,6 @@ public class BuildingSearchBuilder implements Serializable {
 		private Integer areaRentFrom;
 		private Integer areaRentTo;
 		private Integer staffId;
-		private String managerName;
-		private String managerPhone;
 		
 		public Builder setName(String name) {
 			this.name = name;
@@ -133,13 +103,13 @@ public class BuildingSearchBuilder implements Serializable {
 			return this;
 		}
 
-		public Builder setNumberOfBasement(Integer numberOfBasement) {
-			this.numberOfBasement = numberOfBasement;
+		public Builder setFloorArea(Integer floorArea) {
+			this.floorArea = floorArea;
 			return this;
 		}
 
-		public Builder setFloorArea(Integer floorArea) {
-			this.floorArea = floorArea;
+		public Builder setNumberOfBasement(Integer numberOfBasement) {
+			this.numberOfBasement = numberOfBasement;
 			return this;
 		}
 		
@@ -180,26 +150,6 @@ public class BuildingSearchBuilder implements Serializable {
 		
 		public Builder setStaffId(Integer staffId) {
 			this.staffId = staffId;
-			return this;
-		}
-
-		public Builder setLevel(String level) {
-			this.level = level;
-			return this;
-		}
-
-		public Builder setDirection(String direction) {
-			this.direction = direction;
-			return this;
-		}
-
-		public Builder setManagerName(String managerName) {
-			this.managerName = managerName;
-			return this;
-		}
-
-		public Builder setManagerPhone(String managerPhone) {
-			this.managerPhone = managerPhone;
 			return this;
 		}
 

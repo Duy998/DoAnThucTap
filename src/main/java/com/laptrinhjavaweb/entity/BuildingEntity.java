@@ -1,16 +1,25 @@
 package com.laptrinhjavaweb.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "name")
 	private String name;
@@ -87,7 +96,7 @@ public class BuildingEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
     private List<UserEntity> staffs = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "building", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(mappedBy = "building")
 	private List<RentAreaEntity> areas = new ArrayList<>();
 	
 	public String getName() {
