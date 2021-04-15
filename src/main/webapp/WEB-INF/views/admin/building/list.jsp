@@ -50,15 +50,15 @@
 
                         <div class="widget-body">
                             <div class="widget-main">
-                                <form:form cssClass="form-horizontal" commandName="modelSearch" action="${buildingListURL}" id="listForm" method="GET">
+                                  <form:form cssClass="form-horizontal" commandName="modelSearch" action="${buildingListURL}" id="listForm" method="GET">
                                         <div class="form-group">
                                             <div class="col-sm-6">
                                                 <label for="name" style="font-weight:bold">Tên tòa nhà</label>
                                                 <form:input path="name" cssClass="form-control"/>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="areaRent" style="font-weight:bold">Diện tích sàn</label>
-                                                <form:input path="areaRent" cssClass="form-control"/>
+                                                <label for="floorArea" style="font-weight:bold">Diện tích sàn</label>
+                                                <form:input path="floorArea" cssClass="form-control"/>
                                             </div>
                                         </div>
 
@@ -208,14 +208,14 @@
                                         </label>
                                     </td>
                                     <td>${item.name}</td>
-                                    <td>${item.numberOfBasement}</td>
-                                    <td>${item.street}, ${item.ward}, ${item.district}</td>
-                                    <td>Test</td>
-                                    <td>${item.buildingArea}</td>
-                                    <td>Test</td>
-                                    <td>Test</td>
-                                    <td>Test</td>
-                                    <td>Test</td>
+                                    <td>${item.address}</td>
+                                    <td>${item.direction}</td>
+                                    <td>${item.buildingTypesConverted}</td>
+                                    <td>${item.floorArea}</td>
+                                    <td>${item.areaRent}</td>
+                                    <td>${item.areaRentDescription}</td>
+                                    <td>${item.staffsNameAndPhoneConverted}</td>
+                                    <td>${item.costRent}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
                                             <button class="btn btn-sm btn-primary">
