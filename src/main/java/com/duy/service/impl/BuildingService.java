@@ -171,4 +171,12 @@ public class BuildingService implements IBuildingService {
 	public BuildingDTO findOne(Long buildingid) {
 		return buildingConverter.convertToDto(buildingRepository.findOne(buildingid));
 	}
+
+	@Override
+	public void delete(Long[] ids) {
+		for (Long long1 : ids) {
+			buildingRepository.delete(long1);
+		}
+		
+	}
 }

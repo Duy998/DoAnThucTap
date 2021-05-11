@@ -60,4 +60,13 @@ public class BuildingController {
 		mav.addObject("mapDistricts", buildingService.getDistrict());
 		return mav;
 	}
+
+	@RequestMapping(value = "/admin/building-insert", method = RequestMethod.GET)
+	public ModelAndView showInsertBuildingPage() {
+		ModelAndView mav = new ModelAndView("admin/building/insert");
+		mav.addObject("building", new BuildingDTO());
+		mav.addObject("mapTypes", buildingService.getBuildingTypes());
+		mav.addObject("mapDistricts", buildingService.getDistrict());
+		return mav;
+	}
 }

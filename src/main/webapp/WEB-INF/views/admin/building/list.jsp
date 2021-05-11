@@ -160,12 +160,14 @@
                     <div class="pull-right tableTools-container">
                         <div class="btn-group btn-overlap">
                             <div class="btn-group">
-                                <a href='<c:url value='/admin/building-edit'/>'><button data-toggle="tooltip" title="Thêm tòa nhà"
+                                <a href='<c:url value='/admin/building-insert'/>'><button data-toggle="tooltip" title="Thêm tòa nhà"
                                            class="btn btn-white btn-info btn-bold"><i class="fa fa-plus-circle"
                                                                                       aria-hidden="true"></i></button></a>
-                                <a><button data-toggle="tooltip" title="Xóa tòa nhà"
-                                           class="btn btn-white btn-warning btn-bold" style="margin-left: 2px;"><i
-                                        class="fa fa-trash" aria-hidden="true"></i></button></a>
+                              <button id="btnDeleteBuilding" data-toggle="tooltip" title="Xóa tòa nhà"
+                                           
+                                            class="btn btn-white btn-warning btn-bold">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                              </button>
                             </div>
                         </div>
                     </div>
@@ -187,14 +189,14 @@
                                 </label>
                             </th>
                             <th>Tên tòa nhà</th>
-                            <th>Số tầng hầm</th>
                             <th>Địa chỉ</th>
-                            <th>Số điện thoại</th>
-                            <th>Diện tích sàn</th>
+                            <th>Phương Hướng</th>                     
+                            <th>Loại Tòa Nhà</th>
+                            <th>Diện Tích Sàn</th>
                             <th>D.T trống</th>
                             <th>Giá thuê</th>
-                            <th>Phí dịch vụ</th>
-                            <th>Phí MG</th>
+                           
+                           
                             <th>Thao tác</th>
                         </tr>
                         </thead>
@@ -213,8 +215,6 @@
                                     <td>${item.buildingTypesConverted}</td>
                                     <td>${item.floorArea}</td>
                                     <td>${item.areaRent}</td>
-                                    <td>${item.areaRentDescription}</td>
-                                    <td>${item.staffsNameAndPhoneConverted}</td>
                                     <td>${item.costRent}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
@@ -366,6 +366,33 @@
             error: function (response) {
                 console.log('failed');
                 console.log(response);
+            }
+        });
+    }
+    
+    $('#btnDeleteBuilding').click(function (e) {
+        e.preventDefault();
+        var buildingIds = $('#buildingList').find('tbody input[type=checkbox]:checked').map(function() {
+            return $(this).val();
+        }).get();
+        deleteBuilding(buildingIds);
+    });
+    
+    function deleteBuilding(data) {
+        $.ajax({
+            type: "DELETE",
+            url: '${formUrl}',
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {               // Store
+                //localStorage.setItem("message", "You deleted the building successfully!");
+                window.location.href = "http://localhost:8081/spring-boot/admin/building-list";
+            },
+            error: function (response) {
+                console.log('failed');
+                console.log(response);
+                window.location.href = "http://localhost:8081/spring-boot/admin/building-list";
             }
         });
     }

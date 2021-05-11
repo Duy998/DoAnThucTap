@@ -14,4 +14,5 @@ public interface IBuildingService {
     Map<String, String> getDistrict();
     BuildingDTO updatebystaffid(StaffResponseDTO staffs);
     BuildingDTO findOne(Long buildingid);
+    void delete(Long[] ids);
 }

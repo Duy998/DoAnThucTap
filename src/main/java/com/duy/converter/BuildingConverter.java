@@ -1,5 +1,10 @@
 package com.duy.converter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -14,10 +19,6 @@ import com.duy.enums.BuildingTypesEnum;
 import com.duy.enums.DistrictsEnum;
 import com.duy.repository.UserRepository;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 @Component
 public class BuildingConverter {
 
@@ -45,13 +46,27 @@ public class BuildingConverter {
         }
         // buildingTypes
         if (StringUtils.isNotBlank(entity.getBuildingTypes())) {
-            String[] buildingTypesToConvert = entity.getBuildingTypes().split("\\,");
-			String buildingTypesConveryed = null; /*
-											 * Stream.of(buildingTypesToConvert).map(type ->
-											 * BuildingTypesEnum.getBuildingTypesName(type)).collect(Collectors.
-											 * joining(" - "));
-											 */
-            result.setBuildingTypesConverted(buildingTypesConveryed);
+        	
+            String[] buildingTypesToConvert = entity.getBuildingTypes().split(",");
+            
+            String chString = Stream.of(buildingTypesToConvert)
+                    .map(arr -> new String(arr))
+                    .collect(Collectors.joining("--"));
+            
+			/*
+			 * StringBuilder sb = new StringBuilder(); for(int i = 0; i <
+			 * buildingTypesToConvert.length; i++) { sb.append(buildingTypesToConvert[i] +
+			 * ","); } String buildingTypesConveryed = sb.toString();
+			 */
+			
+			
+			/*
+			 * Stream.of(buildingTypesToConvert).map(type ->
+			 * BuildingTypesEnum.getBuildingTypesName(type)).collect(Collectors.
+			 * joining(" - "));
+			 */
+											 
+            result.setBuildingTypesConverted(chString);
         }
         // staff and phone
         if (!CollectionUtils.isEmpty(entity.getStaffs())) {

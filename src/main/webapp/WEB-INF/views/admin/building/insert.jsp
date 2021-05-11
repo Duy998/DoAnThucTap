@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp"%>
-<c:url var="editBuilding" value="/api/building"/>
+<c:url var="createBuilding" value="/api/building"/>
 
 <html>
 <head>
@@ -29,8 +29,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <!-- PAGE CONTENT BEGINS -->
-                    <form:form cssClass="form-horizontal" commandName="building" action="${editBuilding}" id="formEdit" method="PUT">
-                        <form:hidden path="id"/>
+                    <form:form cssClass="form-horizontal" commandName="building" action="${createBuilding}" id="formAdd" method="POST">
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="name">Tên tòa nhà</label>
 
@@ -228,45 +227,14 @@
                                     <form:checkboxes path="buildingTypes" element="span class='lbl'" items="${mapTypes}"/>
                                 </div>
                             </div>
-                        </div>
-                        <!--
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="note">Ghi chú
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="text" id="level" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="productLink">Link sản phẩm
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="text" id="level" class="form-control">
-                            </div>
-                        </div>
-                        -->
-                        <!--
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="level">Bản đồ
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="text" id="level" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for="level">Hình đại diện
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="text" id="level" class="form-control">
-                            </div>
-                        </div>
-                        -->
+                        </div>                        
                         <div class="btn-group pull-right">
-                            <button class="btn btn-primary btn-bold" id="btnEditBuilding">
-                                UPDATE BUILDING
+                            <button class="btn btn-primary btn-bold" id="btnAddBuilding">
+                                Thêm tòa nhà
                             </button>
 
-                             <a type="button" class="btn btn-warning btn-bold" href="http://localhost:8081/spring-boot/admin/building-list">Hủy</a>
+                            <a type="button" class="btn btn-warning btn-bold" href="http://localhost:8081/spring-boot/admin/building-list">Hủy</a>
+                            
                         </div>
                     </form:form>
                 </div>
@@ -283,6 +251,11 @@
     function openModalAssignmentBuilding() {
         $('assignmentBuildingModal').modal();
     }
+    
+    $('#btnAddBuildings').click(function (e) {
+        e.preventDefault();
+        $('#formAdd').submit();
+   });
 </script>
 <script type='text/javascript' src="/admin/index.js"></script>
 </body>
